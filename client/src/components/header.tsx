@@ -1,4 +1,4 @@
-import { Center, Title, Flex, Button } from '@mantine/core';
+import { Center, Title, Flex } from '@mantine/core';
 
 import { AddRecipeButton } from './add_recipe_button';
 
