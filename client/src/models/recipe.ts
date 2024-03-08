@@ -1,6 +1,7 @@
 export interface Recipe {
     id: number;
-    name: string;
-    ingredients: string;
-    instructions: string;
+    title: string;
+    recipeInstructions: string;
+    lastTimeModified: Date;
+    ingredients: number[]; // a list containing the ids of the ingredients
 }

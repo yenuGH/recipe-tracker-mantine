@@ -1,4 +1,4 @@
-import { Accordion } from "@mantine/core"
+import { Accordion, Text } from "@mantine/core"
 import { recipes } from '../models/temp_recipes';
 
 export function RecipeList() {
@@ -7,13 +7,20 @@ export function RecipeList() {
             <Accordion.Item key={recipe.id} value={recipe.name}>
                 <Accordion.Control>{recipe.name}</Accordion.Control>
                 <Accordion.Panel>
-                    <p>Ingredients: {recipe.ingredients}</p>
-                    <p>Instructions: {recipe.instructions}</p>
+                    <h3>Ingredients:</h3>
+                    <Text>
+                        {recipe.ingredients}
+                    </Text>
+
+                    <h3>Instructions:</h3>
+                    <Text>
+                        {recipe.instructions}
+                    </Text>
                 </Accordion.Panel>
             </Accordion.Item>
         );
     });
-    
+
     return (
         <>
             <Accordion variant="separated" radius={"md"}>

@@ -8,9 +8,7 @@ import {
 
 export default function App() {
     return (
-        <MantineProvider
-            defaultColorScheme='dark'
-        >
+        <MantineProvider defaultColorScheme='dark'>
             <>
                 <Router />
             </>

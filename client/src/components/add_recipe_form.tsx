@@ -1,5 +1,5 @@
 import { useForm } from "@mantine/form";
-import { Box, TextInput, Button, Space, Flex } from "@mantine/core";
+import { Box, TextInput, Textarea, Button, Space, Flex } from "@mantine/core";
 
 export function AddRecipeForm(props: any) {
     const recipeForm = useForm({
@@ -27,14 +27,18 @@ export function AddRecipeForm(props: any) {
                         onChange={(event) => recipeForm.setFieldValue("name", event.currentTarget.value)}
                     />
 
-                    <TextInput 
+                    <Textarea 
+                        autosize
+                        minRows={5}
                         required
                         label="Ingredients"
                         value={recipeForm.values.ingredients}
                         onChange={(event) => recipeForm.setFieldValue("ingredients", event.currentTarget.value)}
                     />
 
-                    <TextInput 
+                    <Textarea 
+                        autosize
+                        minRows={5}
                         required
                         label="Instructions"
                         value={recipeForm.values.instructions}
