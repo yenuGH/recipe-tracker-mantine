@@ -10,12 +10,12 @@ export function RecipeList() {
                 <Accordion.Control>{recipe.name}</Accordion.Control>
                 <Accordion.Panel>
                     <h3>Ingredients:</h3>
-                    <Text>
+                    <Text className="textbox">
                         {recipe.ingredients}
                     </Text>
 
                     <h3>Instructions:</h3>
-                    <Text>
+                    <Text className="textbox">
                         {recipe.instructions}
                     </Text>
                 </Accordion.Panel>
