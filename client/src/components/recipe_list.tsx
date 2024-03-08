@@ -1,5 +1,7 @@
 import { Accordion, Text } from "@mantine/core"
+
 import { recipes } from '../models/temp_recipes';
+import "../styles/recipe_list.css";
 
 export function RecipeList() {
     const recipeList = recipes.map((recipe) => {

@@ -20,7 +20,7 @@ export const recipes = [
     {
         id: 4,
         name: "Burger",
-        ingredients: "bun, patty, toppings",
-        instructions: "cook patty, add toppings, add bun \n this is a new line"
+        ingredients: "bun\npatty\ntoppings",
+        instructions: "cook patty, add toppings, add bun\nthis is a new line"
     }
 ]
