@@ -1,4 +1,4 @@
-import { Accordion, Text } from "@mantine/core"
+import { Accordion, Text, Title, Space } from "@mantine/core"
 
 import { recipes } from '../models/temp_recipes';
 import "../styles/recipe_list.css";
@@ -25,6 +25,12 @@ export function RecipeList() {
 
     return (
         <>
+            <Title order={3} td={"underline"}>
+                Saved Recipes
+            </Title>
+
+            <Space h="md" />
+
             <Accordion variant="separated" radius={"md"}>
                 {recipeList}
             </Accordion>

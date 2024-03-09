@@ -6,7 +6,7 @@ export function Header() {
     return (
         <>
             <Center inline maw={600} h={60}>
-                <Flex pl={10} gap={"lg"}>
+                <Flex pl={15} gap={"lg"}>
                     <Title>
                         Recipe Tracker
                     </Title>
