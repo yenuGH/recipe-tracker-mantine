@@ -171,6 +171,17 @@ app.post("/recipes/add", (req, res) => {
     console.log("New recipe has been added...");
 });
 
+app.delete("/recipes/delete/:id", (req, res) => {
+    console.log("Received a request to delete a recipe...");
+
+    let id = req.params.id;
+    console.log(id);
+    recipes = recipes.filter(recipe => recipe.id !== id);
+
+    res.json(recipes);
+    console.log("Recipe has been deleted...");
+});
+
 app.listen(3000, () => {
     console.log("Server is running on port 3000...");
 });
