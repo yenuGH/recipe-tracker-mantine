@@ -1,5 +1,4 @@
-import { Accordion, Text, Title, Space } from "@mantine/core"
-
+import { Accordion, Text, Title, Space, Button, Group } from "@mantine/core"
 import { useState, useEffect } from "react";
 
 import { serverClient } from "../controllers/server_client"
@@ -28,6 +27,17 @@ export function RecipeList() {
                     <Text className="textbox">
                         {recipe.instructions}
                     </Text>
+
+                    <Space h="md" />
+
+                    <Group>
+                        <Button bg={"red"}>
+                            Delete
+                        </Button>
+                        <Button bg={"blue"}>
+                            Edit
+                        </Button>
+                    </Group>
                 </Accordion.Panel>
             </Accordion.Item>
         );
