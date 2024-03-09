@@ -1,31 +1,34 @@
 import { Accordion, Text, Title, Space, Button, Group } from "@mantine/core"
 import { useState, useEffect } from "react";
 
+import { Recipe } from "../models/recipe";
 import { serverClient } from "../controllers/server_client"
 
 import "../styles/recipe_list.css";
 
 export function RecipeList() {
-    const [recipes, setRecipes] = useState<any[]>([]);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
     useEffect(() => {
         serverClient.getSavedRecipes()
-            .then((data) => setRecipes(data))
+            .then((data) => {
+                setRecipes(data.map((recipe: any) => Recipe.fromJSON(recipe)));
+            })
             .catch((error) => console.log(error));
     }, [])
 
     const recipeList = recipes.map((recipe) => {
         return (
-            <Accordion.Item key={recipe.id} value={recipe.title}>
-                <Accordion.Control>{recipe.title}</Accordion.Control>
+            <Accordion.Item key={recipe.id} value={recipe.getTitle()}>
+                <Accordion.Control>{recipe.getTitle()}</Accordion.Control>
                 <Accordion.Panel>
                     <h3>Ingredients:</h3>
                     <Text className="textbox">
-                        {recipe.ingredients}
+                        {recipe.getIngredients()}
                     </Text>
 
                     <h3>Instructions:</h3>
                     <Text className="textbox">
-                        {recipe.instructions}
+                        {recipe.getInstructions()}
                     </Text>
 
                     <Space h="md" />
@@ -34,9 +37,14 @@ export function RecipeList() {
                         <Button bg={"red"}>
                             Delete
                         </Button>
+
                         <Button bg={"blue"}>
                             Edit
                         </Button>
+
+                        <Text>
+                            Last Modified: {recipe.getLastTimeModified()}
+                        </Text>
                     </Group>
                 </Accordion.Panel>
             </Accordion.Item>
