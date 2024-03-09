@@ -1,11 +1,11 @@
 export class Recipe {
-    id: number;
+    id: string;
     title: string;
     ingredients: string[];
     instructions: string;
     lastTimeModified: Date;
 
-    constructor(id: number, title: string, ingredients: string[], instructions: string, lastTimeModified: Date) {
+    constructor(id: string, title: string, ingredients: string[], instructions: string, lastTimeModified: Date) {
         this.id = id;
         this.title = title;
         this.ingredients = ingredients;
@@ -27,7 +27,7 @@ export class Recipe {
         }
     }
 
-    getId(): number {
+    getId(): string {
         return this.id;
     }
 

@@ -1,6 +1,11 @@
 import { useForm } from "@mantine/form";
 import { Box, TextInput, Textarea, Button, Space, Flex } from "@mantine/core";
 
+import { v4 as uuidv4 } from "uuid";
+
+import { Recipe } from "../models/recipe";
+import { serverClient } from "../controllers/server_client";
+
 export function AddRecipeForm(props: any) {
     const recipeForm = useForm({
         initialValues: {
@@ -10,9 +15,23 @@ export function AddRecipeForm(props: any) {
         },
     });
 
-    function handleSubmit(){
+    async function handleSubmit(){
         if (recipeForm.values.name && recipeForm.values.ingredients && recipeForm.values.instructions) {
             props.onClose();
+
+            let recipe = new Recipe(
+                uuidv4(),
+                recipeForm.values.name,
+                recipeForm.values.ingredients.split(", "),
+                recipeForm.values.instructions,
+                new Date()
+            );
+
+            await serverClient.saveRecipe(recipe.toJSON())
+                .then((data) => console.log(data))
+                .catch((error) => console.log(error));
+
+            window.location.reload();
         }
     }
 
