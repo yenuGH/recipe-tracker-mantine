@@ -1,13 +1,23 @@
 import { Accordion, Text, Title, Space } from "@mantine/core"
 
-import { recipes } from '../models/temp_recipes';
+import { useState, useEffect } from "react";
+
+import { serverClient } from "../controllers/server_client"
+
 import "../styles/recipe_list.css";
 
 export function RecipeList() {
+    const [recipes, setRecipes] = useState<any[]>([]);
+    useEffect(() => {
+        serverClient.getSavedRecipes()
+            .then((data) => setRecipes(data))
+            .catch((error) => console.log(error));
+    }, [])
+
     const recipeList = recipes.map((recipe) => {
         return (
-            <Accordion.Item key={recipe.id} value={recipe.name}>
-                <Accordion.Control>{recipe.name}</Accordion.Control>
+            <Accordion.Item key={recipe.id} value={recipe.title}>
+                <Accordion.Control>{recipe.title}</Accordion.Control>
                 <Accordion.Panel>
                     <h3>Ingredients:</h3>
                     <Text className="textbox">

@@ -1,8 +1,6 @@
 import { useForm } from "@mantine/form";
 import { Box, TextInput, Textarea, Button, Space, Flex } from "@mantine/core";
 
-import { serverClient } from "../controllers/server_client";
-
 export function AddRecipeForm(props: any) {
     const recipeForm = useForm({
         initialValues: {
@@ -12,12 +10,9 @@ export function AddRecipeForm(props: any) {
         },
     });
 
-    async function handleSubmit(){
+    function handleSubmit(){
         if (recipeForm.values.name && recipeForm.values.ingredients && recipeForm.values.instructions) {
             props.onClose();
-
-            let data = await serverClient.get();
-            console.log(data);
         }
     }
 
