@@ -1,9 +1,9 @@
 export const serverClient = {
     get: async function() {
-        return fetch('/')
-            .then(response => response)
-            .then(data => data)
-            .catch(error => console.error(error));
+        return fetch("http://localhost:3000/recipes/all")
+                .then(response => response.json())
+                .then(data => data)
+                .catch(error => console.log(error));
     },
 
     post: async function(data: any) {
