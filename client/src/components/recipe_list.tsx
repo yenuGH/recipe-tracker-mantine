@@ -32,6 +32,10 @@ export function RecipeList() {
         }
     }
 
+    async function handleEdit(id: string){
+        console.log(`Editing recipe with ID ${id}.`);
+    }
+
     const recipeList = recipes.map((recipe) => {
         return (
             <Accordion.Item key={recipe.id} value={recipe.getTitle()}>
@@ -54,7 +58,7 @@ export function RecipeList() {
                             Delete
                         </Button>
 
-                        <Button bg={"blue"}>
+                        <Button bg={"blue"} onClick={() => handleEdit(recipe.id ?? "")}>
                             Edit
                         </Button>
 
