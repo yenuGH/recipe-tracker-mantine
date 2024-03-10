@@ -38,12 +38,12 @@ export function RecipeList() {
                 <Accordion.Control>{recipe.getTitle()}</Accordion.Control>
                 <Accordion.Panel>
                     <h3>Ingredients:</h3>
-                    <Text className="textbox" ml={50}>
+                    <Text className="textbox">
                         {recipe.getIngredients()}
                     </Text>
 
                     <h3>Instructions:</h3>
-                    <Text className="textbox" ml={50}>
+                    <Text className="textbox">
                         {recipe.getInstructions()}
                     </Text>
 
