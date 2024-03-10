@@ -18,4 +18,13 @@ export const serverClient = {
         .then(data => data)
         .catch(error => console.log(error));
     },
+
+    deleteRecipe: async function(uuid: string) {
+        return fetch(`http://localhost:3000/recipes/delete/:${uuid}`, {
+            method: "DELETE"
+        })
+        .then(response => response.json())
+        .then(data => data)
+        .catch(error => console.log(error));
+    }
 }

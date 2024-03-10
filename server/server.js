@@ -173,9 +173,9 @@ app.post("/recipes/add", (req, res) => {
 
 app.delete("/recipes/delete/:id", (req, res) => {
     console.log("Received a request to delete a recipe...");
+    console.log(`Recipe ID: ${req.params.id}`);
 
     let id = req.params.id;
-    console.log(id);
     recipes = recipes.filter(recipe => recipe.id !== id);
 
     res.json(recipes);
