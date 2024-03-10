@@ -1,10 +1,10 @@
+// Mongoose + MongoDB
 const mongoose = require('mongoose');
-
 mongoose.set("strictQuery", false);
-mongoose.set("mongodb://localhost:27017/cmpt372assignment2", { useNewUrlParser: true });
-
-let database = mongoose.connection;
-database.on("error", console.error.bind(console, "connection error"));
+mongoose.connect("mongodb://localhost:27017/cmpt372-assignment2")
+    .then(() => { console.log("Connected to the database") })
+    .catch((error) => { console.log("Error connecting to the database: " + error) 
+});
 
 let ingredientSchema = new mongoose.Schema(
     {
@@ -14,6 +14,7 @@ let ingredientSchema = new mongoose.Schema(
         },
     }
 );
+const Ingredient = mongoose.model("Ingredient", ingredientSchema);
 
 let recipeSchema = new mongoose.Schema(
     {
@@ -22,7 +23,7 @@ let recipeSchema = new mongoose.Schema(
             required: true
         },
         ingredients: {
-            type: [mongoose.Schema.Types.ObjectId],
+            type: [mongoose.SchemaTypes.ObjectId],
             ref: "Ingredient",
             required: true
         },
@@ -37,65 +38,29 @@ let recipeSchema = new mongoose.Schema(
         }
     }
 );
-
-const Ingredient = mongoose.model("Ingredient", ingredientSchema);
 const Recipe = mongoose.model("Recipe", recipeSchema);
 
+// Server
+async function run() {
+    const ingredient1 = new Ingredient({ name: 'salt' });
+    const ingredient2 = new Ingredient({ name: 'pepper' });
+
+    // Saving ingredients
+    await ingredient1.save();
+    await ingredient2.save();
+
+    // Creating a recipe with references to ingredients
+    const recipe = new Recipe({
+        title: 'Spaghetti Carbonara',
+        instructions: 'Cook pasta, mix with eggs, cheese, and bacon, season with salt and pepper.',
+        ingredients: [ingredient1._id, ingredient2._id]
+    });
+
+    await recipe.save();
+}
+
 module.exports = {
+    run,
     Ingredient,
     Recipe
-};
-
-// export const databaseHelper = {
-//     getRecipes: async function() {
-//         return await database.collection("recipes").find({}).toArray();
-//     },
-//     getRecipe: async function(id) {
-//         return await database.collection("recipes").findOne({ _id: id });
-//     },
-//     addRecipe: async function(recipe) {
-//         return await database.collection("recipes").insertOne(recipe);
-//     },
-//     updateRecipe: async function(id, recipe) {
-//         return await database.collection("recipes").updateOne({ _id: id }, { $set: recipe });
-//     },
-//     deleteRecipe: async function(id) {
-//         return await database.collection("recipes").deleteOne({ _id: id });
-//     },
-//     getIngredients: async function() {
-//         return await database.collection("ingredients").find({}).toArray();
-//     },
-//     getIngredient: async function(id) {
-//         return await database.collection("ingredients").findOne({ _id: id });
-//     },
-//     addIngredient: async function(ingredient) {
-//         return await database.collection("ingredients").insertOne(ingredient);
-//     },
-//     updateIngredient: async function(id, ingredient) {
-//         return await database.collection("ingredients").updateOne({ _id: id }, { $set: ingredient });
-//     },
-//     deleteIngredient: async function(id) {
-//         return await database.collection("ingredients").deleteOne({ _id: id });
-//     },
-//     getRecipesWithIngredient: async function(ingredient) {
-//         return await database.collection("recipes").find({ ingredients: { $elemMatch: { name: ingredient } } }).toArray();
-//     },
-//     getIngredientsInRecipe: async function(recipe) {
-//         return await database.collection("recipes").findOne({ name: recipe });
-//     },
-//     getRecipesWithIngredient: async function(ingredient) {
-//         return await database.collection("recipes").find({ ingredients: { $elemMatch: { name: ingredient } } }).toArray();
-//     },
-//     getIngredientsInRecipe: async function(recipe) {
-//         return await database.collection("recipes").findOne({ name: recipe });
-//     },
-//     getRecipesWithIngredient: async function(ingredient) {
-//         return await database.collection("recipes").find({ ingredients: { $elemMatch: { name: ingredient } } }).toArray();
-//     },
-//     getIngredientsInRecipe: async function(recipe) {
-//         return await database.collection("recipes").findOne({ name: recipe });
-//     },
-//     getRecipesWithIngredient: async function(ingredient) {
-//         return await database.collection("recipes").find({ ingredients: { $elemMatch : { name: ingredient } } }).toArray();
-//     }
-// }
+}
