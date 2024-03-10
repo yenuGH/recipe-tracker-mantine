@@ -1,13 +1,16 @@
 export const serverClient = {
-    getSavedRecipes: async function() {
-        return fetch("http://localhost:3000/recipes/all")
+    getRecipes: async function() {
+        return fetch("http://localhost:8080/recipes/")
                 .then(response => response.json())
-                .then(data => data)
+                .then(data => {
+                    console.log(data);
+                    return data;
+                })
                 .catch(error => console.log(error));
     },
     
     saveRecipe: async function(recipe: any) {
-        return fetch("http://localhost:3000/recipes/add", {
+        return fetch("http://localhost:8080/recipes/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -20,7 +23,7 @@ export const serverClient = {
     },
 
     deleteRecipe: async function(uuid: string) {
-        return fetch(`http://localhost:3000/recipes/delete/:${uuid}`, {
+        return fetch(`http://localhost:8080/recipes/delete/:${uuid}`, {
             method: "DELETE"
         })
         .then(response => response.json())

@@ -38,29 +38,39 @@ let recipeSchema = new mongoose.Schema(
         }
     }
 );
+recipeSchema.pre("save", function (next) {
+    this.lastTimeModified = Date.now();
+    next();
+});
 const Recipe = mongoose.model("Recipe", recipeSchema);
 
-// Server
-async function run() {
-    const ingredient1 = new Ingredient({ name: 'salt' });
-    const ingredient2 = new Ingredient({ name: 'pepper' });
+const mongooseHelper = {
+    getRecipes: async function () {
+        let result = await Recipe.find().populate("ingredients");
+        
+        let formattedResult = result.map(recipe => {
+            // Extracting relevant fields from the recipe object
+            const { id, title, ingredients, instructions, lastTimeModified } = recipe;
+        
+            // Mapping ingredient objects to their names
+            const ingredientNames = ingredients.map(ingredient => ingredient.name);
+        
+            // Constructing the formatted recipe object
+            return {
+                id,
+                title,
+                ingredients: ingredientNames,
+                instructions,
+                lastTimeModified
+            };
+        });
 
-    // Saving ingredients
-    await ingredient1.save();
-    await ingredient2.save();
-
-    // Creating a recipe with references to ingredients
-    const recipe = new Recipe({
-        title: 'Spaghetti Carbonara',
-        instructions: 'Cook pasta, mix with eggs, cheese, and bacon, season with salt and pepper.',
-        ingredients: [ingredient1._id, ingredient2._id]
-    });
-
-    await recipe.save();
+        return formattedResult;
+    }
 }
 
 module.exports = {
-    run,
+    mongooseHelper,
     Ingredient,
     Recipe
 }

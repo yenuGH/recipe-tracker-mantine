@@ -9,7 +9,7 @@ import "../styles/recipe_list.css";
 export function RecipeList() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     useEffect(() => {
-        serverClient.getSavedRecipes()
+        serverClient.getRecipes()
             .then((data) => {
                 setRecipes(data.map((recipe: any) => Recipe.fromJSON(recipe)));
             })
