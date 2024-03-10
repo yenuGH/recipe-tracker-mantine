@@ -16,16 +16,16 @@ export function RecipeList() {
             .catch((error) => console.log(error));
     }, [])
 
-    async function handleDelete(uuid: string){
+    async function handleDelete(id: string){
         if (confirm("Are you sure you want to delete this recipe?")){
-            await serverClient.deleteRecipe(uuid)
-                .then((data) => {
-                    setRecipes(data.map((recipe: any) => Recipe.fromJSON(recipe)));
+            await serverClient.deleteRecipe(id)
+                .then(() => {
+                    window.location.reload();
                 })
                 .catch((error) => console.log(error));
 
             alert("Recipe was deleted.");
-            console.log(`Recipe with UUID ${uuid} was deleted.`);
+            console.log(`Recipe with ID ${id} was deleted.`);
         }
         else {
             alert("Recipe was not deleted.");
@@ -38,7 +38,7 @@ export function RecipeList() {
                 <Accordion.Control>{recipe.getTitle()}</Accordion.Control>
                 <Accordion.Panel>
                     <h3>Ingredients:</h3>
-                    <Text className="textbox">
+                    <Text className="textbox"      >
                         {recipe.getIngredients()}
                     </Text>
 
@@ -50,7 +50,7 @@ export function RecipeList() {
                     <Space h="md" />
 
                     <Group>
-                        <Button bg={"red"} onClick={() => handleDelete(recipe.id)}>
+                        <Button bg={"red"} onClick={() => handleDelete(recipe.id ?? "")}>
                             Delete
                         </Button>
 

@@ -20,9 +20,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Routes
-app.get('/recipes', async (req, res) => {
+app.get("/recipes", async (req, res) => {
     let result = await mongooseHelper.getRecipes();
     console.log("List of recipes sent...");
+    res.json(result);
+});
+
+app.post("/recipes/add", async (req, res) => {
+    let recipe = req.body;
+    let result = await mongooseHelper.addRecipe(recipe);
+    
+    console.log("New recipe added: " + result);
+    
+    res.json(result);
+});
+
+app.delete("/recipes/delete/:id", async (req, res) => {
+    let id = req.params.id;
+    console.log("Deleting recipe with ID: " + id);
+    
+    let result = await mongooseHelper.deleteRecipe(id);
+    console.log("Recipe deleted: " + result);
+    
+    res.json(result);
+});
+
+app.post("/recipes/update/:id", async (req, res) => {
+    let recipe = req.params.id;
+    let result = await mongooseHelper.updateRecipe(recipe);
+    
+    console.log("Recipe updated: " + result);
+    
     res.json(result);
 });
 

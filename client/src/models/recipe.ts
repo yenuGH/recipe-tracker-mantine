@@ -1,5 +1,5 @@
 export class Recipe {
-    id: string;
+    id?: string | undefined;
     title: string;
     ingredients: string[];
     instructions: string;
@@ -28,7 +28,7 @@ export class Recipe {
     }
 
     getId(): string {
-        return this.id;
+        return this.id ?? "";
     }
 
     getTitle(): string {

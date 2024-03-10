@@ -66,6 +66,57 @@ const mongooseHelper = {
         });
 
         return formattedResult;
+    },
+
+    addRecipe: async function (recipe) {
+        let ingredientIds = [];
+        for (let ingredient of recipe.ingredients) {
+            let ingredientObject = await Ingredient.findOne({ name: ingredient });
+            if (ingredientObject) {
+                ingredientIds.push(ingredientObject._id);
+            } else {
+                let newIngredient = new Ingredient({ name: ingredient.trim() });
+                await newIngredient.save();
+                ingredientIds.push(newIngredient._id);
+            }
+        }
+
+        let newRecipe = new Recipe({
+            title: recipe.title,
+            ingredients: ingredientIds,
+            instructions: recipe.instructions
+        });
+        await newRecipe.save();
+        return newRecipe;
+    },
+
+    deleteRecipe: async function (recipeId) {
+        let result = await Recipe.deleteOne({ _id: recipeId });
+        return result;
+    },
+
+    updateRecipe: async function (recipeId, newRecipe) {
+        let ingredientIds = [];
+        for (let ingredient of newRecipe.ingredients) {
+            let ingredientObject = await Ingredient.findOne({ name: ingredient });
+            if (ingredientObject) {
+                ingredientIds.push(ingredientObject._id);
+            } else {
+                let newIngredient = new Ingredient({ name: ingredient.trim() });
+                await newIngredient.save();
+                ingredientIds.push(newIngredient._id);
+            }
+        }
+
+        let result = await Recipe.updateOne(
+            { _id: recipeId },
+            {
+                title: newRecipe.title,
+                ingredients: ingredientIds,
+                instructions: newRecipe.instructions
+            }
+        );
+        return result;
     }
 }
 
