@@ -25,8 +25,8 @@ export function EditRecipeForm(props: any) {
             }
 
             await serverClient.updateRecipe(recipe)
-                .then((data) => console.log(data))
-                .catch((error) => console.log(error));
+                .then((data: any) => console.log(data))
+                .catch((error: any) => console.log(error));
 
             alert("Recipe was updated.");
             window.location.reload();

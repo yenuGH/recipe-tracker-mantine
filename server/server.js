@@ -13,6 +13,8 @@ const corsOptions = {
     optionSuccessStatus: 200,
 }
 
+const path = require('path');
+app.use("/", express.static(path.join(__dirname, "/build")));
 
 // Middleware
 app.use(cors(corsOptions));
@@ -55,6 +57,7 @@ app.put("/recipes/update/:id", async (req, res) => {
     res.json(result);
 });
 
-app.listen(8080, () => {
-    console.log("Server is running on port 8080");
+let port = 3000;
+app.listen(port, () => {
+    console.log("Server running on port " + port + "...");
 });

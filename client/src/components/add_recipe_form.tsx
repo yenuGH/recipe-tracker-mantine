@@ -24,8 +24,8 @@ export function AddRecipeForm(props: any) {
             }
 
             await serverClient.saveRecipe(recipe)
-                .then((data) => console.log(data))
-                .catch((error) => console.log(error));
+                .then((data: any) => console.log(data))
+                .catch((error: any) => console.log(error));
 
             window.location.reload();
         }

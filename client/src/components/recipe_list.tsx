@@ -15,10 +15,10 @@ export function RecipeList() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     useEffect(() => {
         serverClient.getRecipes()
-            .then((data) => {
+            .then((data: any) => {
                 setRecipes(data.map((recipe: any) => Recipe.fromJSON(recipe)));
             })
-            .catch((error) => console.log(error));
+            .catch((error: any) => console.log(error));
     }, [])
 
     async function handleDelete(id: string){
@@ -27,7 +27,7 @@ export function RecipeList() {
                 .then(() => {
                     window.location.reload();
                 })
-                .catch((error) => console.log(error));
+                .catch((error: any) => console.log(error));
 
             alert("Recipe was deleted.");
             console.log(`Recipe with ID ${id} was deleted.`);

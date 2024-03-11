@@ -1,6 +1,9 @@
-export const serverClient = {
+const portNumber: number = 3000;
+const serverUrl: string = `http://localhost:${portNumber}/recipes/`;
+
+export const serverClient: any = {
     getRecipes: async function() {
-        return fetch("http://localhost:8080/recipes/")
+        return fetch(serverUrl)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -10,7 +13,7 @@ export const serverClient = {
     },
     
     saveRecipe: async function(recipe: any) {
-        return fetch("http://localhost:8080/recipes/add", {
+        return fetch(`${serverUrl}add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -23,7 +26,7 @@ export const serverClient = {
     },
 
     deleteRecipe: async function(id: string) {
-        return fetch(`http://localhost:8080/recipes/delete/${id}`, {
+        return fetch(`${serverUrl}delete/${id}`, {
             method: "DELETE",
         })
         .then(response => response.json())
@@ -35,7 +38,7 @@ export const serverClient = {
 
         console.log("Updating recipe: ", recipe);
 
-        return fetch(`http://localhost:8080/recipes/update/${recipe.id}`, {
+        return fetch(`${serverUrl}update/${recipe.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
