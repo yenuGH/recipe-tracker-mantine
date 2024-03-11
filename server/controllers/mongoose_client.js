@@ -1,7 +1,7 @@
 // Mongoose + MongoDB
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://localhost:27017/cmpt372-assignment2")
+mongoose.connect("mongodb://db:27017/cmpt372-assignment2")
     .then(() => { console.log("Connected to the database") })
     .catch((error) => { console.log("Error connecting to the database: " + error) 
 });

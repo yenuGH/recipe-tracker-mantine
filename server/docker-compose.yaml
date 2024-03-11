@@ -1,11 +1,14 @@
 version: "3.9"
 
 services:
-  database:
-    image: yenu/cmpt372assignment2-database
+  db:
+    image: mongo:latest
+    container_name: cmpt372assignment2-database
     ports:
       - "27017:27017"
   server:
     image: yenu/cmpt372assignment2-server
+    container_name: cmpt372assignment2-server
+    restart: always
     ports:
       - "3000:3000"
