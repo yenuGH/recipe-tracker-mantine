@@ -32,6 +32,9 @@ export const serverClient = {
     },
 
     updateRecipe: async function(recipe: any) {
+
+        console.log("Updating recipe: ", recipe);
+
         return fetch(`http://localhost:8080/recipes/update/${recipe.id}`, {
             method: "PUT",
             headers: {

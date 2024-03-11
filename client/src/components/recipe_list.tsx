@@ -1,12 +1,17 @@
-import { Accordion, Text, Title, Space, Button, Group } from "@mantine/core"
+import { useDisclosure } from "@mantine/hooks";
+import { Accordion, Text, Title, Space, Button, Group, Modal } from "@mantine/core"
 import { useState, useEffect } from "react";
 
 import { Recipe } from "../models/recipe";
 import { serverClient } from "../controllers/server_client"
-
 import "../styles/recipe_list.css";
+import "./edit_recipe_form";
+import { EditRecipeForm } from "./edit_recipe_form";
 
 export function RecipeList() {
+    const [opened, {open, close}] = useDisclosure();
+    const [recipeToEdit, setRecipeToEdit] = useState<Recipe | null>(null);
+
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     useEffect(() => {
         serverClient.getRecipes()
@@ -32,10 +37,6 @@ export function RecipeList() {
         }
     }
 
-    async function handleEdit(id: string){
-        console.log(`Editing recipe with ID ${id}.`);
-    }
-
     const recipeList = recipes.map((recipe) => {
         return (
             <Accordion.Item key={recipe.id} value={recipe.getTitle()}>
@@ -58,7 +59,11 @@ export function RecipeList() {
                             Delete
                         </Button>
 
-                        <Button bg={"blue"} onClick={() => handleEdit(recipe.id ?? "")}>
+                        <Button bg={"blue"} onClick={() => {
+                            open();
+                            console.log("Editing recipeID: ", recipe.id ?? "");
+                            setRecipeToEdit(recipe);
+                        }}>
                             Edit
                         </Button>
 
@@ -76,6 +81,13 @@ export function RecipeList() {
             <Title order={3} td={"underline"}>
                 Saved Recipes
             </Title>
+
+            <Modal opened={opened} onClose={close} title="Edit Recipe">
+                <EditRecipeForm 
+                    onClose={close}
+                    recipe={recipeToEdit}
+                />
+            </Modal>
 
             <Space h="md" />
 

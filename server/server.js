@@ -45,10 +45,11 @@ app.delete("/recipes/delete/:id", async (req, res) => {
     res.json(result);
 });
 
-app.post("/recipes/update/:id", async (req, res) => {
-    let recipe = req.params.id;
-    let result = await mongooseHelper.updateRecipe(recipe);
-    
+app.put("/recipes/update/:id", async (req, res) => {
+    let recipe = req.body;
+    console.log("Updating recipe with ID: " + recipe.id);
+
+    let result = await mongooseHelper.updateRecipe(recipe.id, recipe);
     console.log("Recipe updated: " + result);
     
     res.json(result);

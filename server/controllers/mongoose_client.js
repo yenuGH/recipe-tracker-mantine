@@ -38,10 +38,6 @@ let recipeSchema = new mongoose.Schema(
         }
     }
 );
-recipeSchema.pre("save", function (next) {
-    this.lastTimeModified = Date.now();
-    next();
-});
 const Recipe = mongoose.model("Recipe", recipeSchema);
 
 const mongooseHelper = {
@@ -113,7 +109,8 @@ const mongooseHelper = {
             {
                 title: newRecipe.title,
                 ingredients: ingredientIds,
-                instructions: newRecipe.instructions
+                instructions: newRecipe.instructions,
+                lastTimeModified: Date.now()
             }
         );
         return result;
